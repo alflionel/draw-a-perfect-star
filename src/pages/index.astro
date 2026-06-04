@@ -10,8 +10,225 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
+		<style>
+			body {
+				margin: 0;
+				background: #0b0f1a;
+				color: white;
+				font-family: system-ui;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			canvas {
+				background: #111a2e;
+				border: 2px solid #2a3a66;
+				border-radius: 12px;
+				touch-action: none;
+			}
+
+			.ui {
+				margin: 10px;
+				display: flex;
+				gap: 10px;
+				align-items: center;
+			}
+
+			button {
+				padding: 8px 12px;
+				border: none;
+				border-radius: 8px;
+				background: #2a3a66;
+				color: white;
+				cursor: pointer;
+			}
+		</style>
 	</head>
-	<body>
-		<h1>Astro</h1>
+		<body>
+		<h2>Draw a Star</h2>
+		<canvas id="c" width="600" height="600"></canvas>
+		<div class="ui">
+			<button onclick="resetGame()">Reset</button>
+			<div id="score">Accuracy: -</div>
+		</div>
+		<script>
+			const canvas = document.getElementById("c");
+			const ctx = canvas.getContext("2d");
+			
+			let drawing = false;
+			let locked = false;
+			let path = [];
+
+			// ---------- INPUT ----------
+			canvas.addEventListener("mousedown", (e) => {
+			if (locked) return;
+
+			drawing = true;
+			path = [];
+			});
+
+			canvas.addEventListener("mouseup", () => {
+			if (!drawing) return;
+
+			drawing = false;
+			locked = true;   // lock after stroke ends
+
+			const s = getScore();
+			document.getElementById("score").innerText =
+				"Accuracy: " + s.toFixed(1) + "%";
+			});
+
+			canvas.addEventListener("mousemove", (e) => {
+			if (!drawing || locked) return;
+
+			const r = canvas.getBoundingClientRect();
+			const x = e.clientX - r.left;
+			const y = e.clientY - r.top;
+
+			path.push({ x, y });
+
+			if (path.length > 1) {
+				const a = path[path.length - 2];
+				const b = path[path.length - 1];
+
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = "white";
+				ctx.lineCap = "round";
+
+				ctx.beginPath();
+				ctx.moveTo(a.x, a.y);
+				ctx.lineTo(b.x, b.y);
+				ctx.stroke();
+			}
+			});
+
+			// ---------- DIST ----------
+			function dist(a, b) {
+			return Math.hypot(a.x - b.x, a.y - b.y);
+			}
+
+			// ---------- RESAMPLE ----------
+			function resample(points, n = 100) {
+			if (points.length < 2) return points;
+
+			let dists = [0];
+
+			for (let i = 1; i < points.length; i++) {
+				dists[i] = dists[i - 1] + dist(points[i], points[i - 1]);
+			}
+
+			const total = dists[dists.length - 1];
+			if (total === 0) return points;
+
+			const step = total / (n - 1);
+
+			let out = [];
+			let j = 0;
+
+			for (let i = 0; i < n; i++) {
+				const target = i * step;
+
+				while (j < dists.length - 1 && dists[j] < target) j++;
+
+				const i1 = Math.max(j - 1, 0);
+				const i2 = j;
+
+				const p1 = points[i1];
+				const p2 = points[i2] || p1;
+
+				const d1 = dists[i1];
+				const d2 = dists[i2];
+
+				const t = (target - d1) / ((d2 - d1) || 1);
+
+				out.push({
+				x: p1.x + (p2.x - p1.x) * t,
+				y: p1.y + (p2.y - p1.y) * t
+				});
+			}
+
+			return out;
+			}
+
+			// ---------- NORMALISE ----------
+			function normalize(points) {
+			let cx = 0, cy = 0;
+
+			for (let p of points) {
+				cx += p.x;
+				cy += p.y;
+			}
+
+			cx /= points.length;
+			cy /= points.length;
+
+			let shifted = points.map(p => ({
+				x: p.x - cx,
+				y: p.y - cy
+			}));
+
+			let maxR = 0;
+			for (let p of shifted) {
+				maxR = Math.max(maxR, Math.hypot(p.x, p.y));
+			}
+
+			return shifted.map(p => ({
+				x: p.x / (maxR || 1),
+				y: p.y / (maxR || 1)
+			}));
+			}
+
+			// ---------- STAR ----------
+			function makeStar(n = 100) {
+			let pts = [];
+
+			for (let i = 0; i < n; i++) {
+				const t = i / n;
+				const a = t * Math.PI * 2 - Math.PI / 2;
+
+				const k = Math.sin(a * 5);
+				const r = k > 0 ? 1 : 0.45;
+
+				pts.push({
+				x: Math.cos(a) * r,
+				y: Math.sin(a) * r
+				});
+			}
+
+			return pts;
+			}
+
+			// ---------- SCORE ----------
+			function getScore() {
+			if (path.length < 10) return 0;
+
+			let user = normalize(resample(path, 120));
+			let star = makeStar(120);
+
+			let error = 0;
+
+			for (let i = 0; i < user.length; i++) {
+				error += Math.hypot(
+				user[i].x - star[i].x,
+				user[i].y - star[i].y
+				);
+			}
+
+			error /= user.length;
+
+			let score = 100 - error * 120;
+			return Math.max(0, Math.min(100, score));
+			}
+
+			// ---------- RESET ----------
+			function resetGame() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			path = [];
+			drawing = false;
+			locked = false;
+			document.getElementById("score").innerText = "Accuracy: -";
+			}
+		</script>
 	</body>
 </html>
