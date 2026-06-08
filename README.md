@@ -1,43 +1,45 @@
-# Astro Starter Kit: Minimal
+# ⭐ Draw a Perfect Star
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A small browser-based drawing game where your goal is simple: **draw a perfect 5-point star as accurately as possible** and get scored based on how close you are to the ideal shape.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Built with vanilla HTML, Canvas, and JavaScript — no frameworks, just math and vibes.
 
-## 🚀 Project Structure
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🎮 How it works
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- Click and drag on the canvas to draw a shape
+- When you release, your drawing is normalised and compared against an ideal star
+- You get an **accuracy score (0–100%)**
+- Higher precision = higher score
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The scoring system compares your stroke path to a mathematically generated star curve using resampling + normalisation.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Features
 
-## 🧞 Commands
+- Realtime drawing on HTML Canvas
+- Gesture normalisation for fair scoring
+- Procedural "perfect star" generator
+- Live accuracy feedback while drawing
+- Dynamic colour feedback based on score
+- Reset system to try again instantly
+- Minimal neon-style UI with animated background
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Scoring system
 
-## 👀 Want to learn more?
+The game:
+1. Resamples your drawn path to a fixed number of points
+2. Normalises it (centres + scales to unit size)
+3. Generates a reference 5-pointed star shape
+4. Computes average point distance error
+5. Converts error into a 0–100% accuracy score
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+
+## Getting started
+
+Either visit [[https://alflionel.github.io/draw-a-perfect-star/]] or clone the repo and run from dev!
