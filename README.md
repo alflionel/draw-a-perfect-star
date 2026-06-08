@@ -2,9 +2,7 @@
 
 A small browser-based drawing game where your goal is simple: **draw a perfect 5-point star as accurately as possible** and get scored based on how close you are to the ideal shape.
 
-Built with vanilla HTML, Canvas, and JavaScript — no frameworks, just math and vibes.
-
----
+Built with vanilla HTML, Canvas, and JavaScript- no frameworks, just math and vibes.
 
 ## 🎮 How it works
 
@@ -14,8 +12,6 @@ Built with vanilla HTML, Canvas, and JavaScript — no frameworks, just math and
 - Higher precision = higher score
 
 The scoring system compares your stroke path to a mathematically generated star curve using resampling + normalisation.
-
----
 
 ## Features
 
@@ -27,8 +23,6 @@ The scoring system compares your stroke path to a mathematically generated star 
 - Reset system to try again instantly
 - Minimal neon-style UI with animated background
 
----
-
 ## Scoring system
 
 The game:
@@ -37,8 +31,6 @@ The game:
 3. Generates a reference 5-pointed star shape
 4. Computes average point distance error
 5. Converts error into a 0–100% accuracy score
-
----
 
 ## Getting started
 
