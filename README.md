@@ -4,7 +4,7 @@ A small browser-based drawing game where your goal is simple: **draw a perfect 5
 
 Built with vanilla HTML, Canvas, and JavaScript- no frameworks, just math and vibes.
 
-## 🎮 How it works
+## How it works
 
 - Click and drag on the canvas to draw a shape
 - When you release, your drawing is normalised and compared against an ideal star
