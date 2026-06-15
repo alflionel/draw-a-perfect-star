@@ -13,9 +13,10 @@ import '../styles/global.css';
 	<link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
 </head>
 
-<body class="min-h-screen overflow-hidden text-white">
+<body class="min-h-screen overflow-hidden text-white bg-slate-950">
 
-	<div class="fixed inset-0 bg-slate-950">
+	{/* Decorative Background Patterns */}
+	<div class="fixed inset-0 pointer-events-none">
 		<div
 			class="absolute inset-0"
 			style="
@@ -40,7 +41,7 @@ import '../styles/global.css';
 	<main class="relative z-10 flex min-h-screen flex-col items-center justify-center px-4">
 
 		<h1
-			class="mb-8 text-center text-6xl md:text-7xl"
+			class="mb-4 text-center text-4xl md:text-6xl select-none"
 			style="
 				font-family:'Darumadrop One',cursive;
 				animation: float 5s ease-in-out infinite;
@@ -49,17 +50,17 @@ import '../styles/global.css';
 			Draw a Perfect Star
 		</h1>
 
-		<div class="relative w-[600px] h-[600px] max-w-[90vw] max-h-[90vw]">
+		<div class="relative w-[550px] h-[550px] max-w-[85vw] max-h-[65vh] aspect-square">
 
 			<div
-				class="absolute inset-0 rounded-[32px] pointer-events-none opacity-0"
+				class="absolute inset-0 rounded-[32px] pointer-events-none opacity-100"
 				style="
-					background:rgba(255,255,255,.03);
+					background:rgba(255,255,255,.02);
 					backdrop-filter:blur(12px);
-					border:1px solid rgba(255,255,255,.08);
+					border:1px solid rgba(255,255,255,.05);
 					box-shadow:
-						0 0 80px rgba(34,211,238,.08),
-						0 0 120px rgba(168,85,247,.06);
+						0 0 80px rgba(34,211,238,.04),
+						0 0 120px rgba(168,85,247,.04);
 				"
 			></div>
 
@@ -67,40 +68,29 @@ import '../styles/global.css';
 				id="c"
 				width="600"
 				height="600"
-				class="absolute inset-0 z-10 w-full h-full rounded-[32px] touch-none"
+				class="absolute inset-0 z-10 w-full h-full rounded-[32px] touch-none cursor-crosshair"
 			></canvas>
 
-			<div
-				class="
-					absolute left-1/2 top-1/2
-					-translate-x-1/2 -translate-y-1/2
-					z-20 pointer-events-none
-				"
-			>
+			{/* Center Guide Dot */}
+			<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
 				<div
-					class="
-						w-3 h-3 rounded-full bg-white
-						animate-pulse
-					"
-					style="
-						box-shadow:
-							0 0 10px rgba(255,255,255,.9),
-							0 0 25px rgba(255,255,255,.5);
-					"
+					class="w-3 h-3 rounded-full bg-white opacity-40 animate-pulse"
+					style="box-shadow: 0 0 10px rgba(255,255,255,.5);"
 				></div>
 			</div>
 
+			{/* Score Indicator */}
 			<div
-				class="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-5 py-2 rounded-full pointer-events-none"
+				class="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-5 py-2 rounded-full pointer-events-none select-none"
 				style="
-					background:rgba(255,255,255,.08);
+					background:rgba(15, 23, 42, 0.6);
 					backdrop-filter:blur(10px);
 					border:1px solid rgba(255,255,255,.08);
 				"
 			>
 				<div
 					id="score"
-					class="text-xl font-bold transition-all duration-300"
+					class="text-xl font-bold transition-all duration-300 tracking-wide text-white/90"
 				>
 					Accuracy: -
 				</div>
@@ -108,19 +98,44 @@ import '../styles/global.css';
 
 		</div>
 
+		{/* Interactive Reset Button */}
 		<button
 			id="resetBtn"
-			class="mt-6 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
+			class="mt-8 px-6 py-2.5 rounded-xl text-sm font-semibold tracking-wide border border-white/10 bg-white/5 hover:bg-white/10 active:scale-95 transition-all duration-500 ease-out select-none z-30 transform hidden opacity-0 translate-y-4"
 		>
-			Reset
+			Reset Canvas
 		</button>
 
 	</main>
 
-	<script>
+	{/* Github Repository Link Footer */}
+	<div class="fixed bottom-4 right-4 z-50">
+		<a
+			href="https://github.com/alflionel/draw-a-perfect-star"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 backdrop-blur-md transition-all duration-200"
+		>
+			<svg
+				width="18"
+				height="18"
+				viewBox="0 0 24 24"
+				fill="currentColor"
+				class="opacity-80 group-hover:opacity-100 transition"
+			>
+				<path d="M12 .5C5.73.5.75 5.6.75 12c0 5.1 3.29 9.45 7.86 11 .58.1.8-.26.8-.57v-2.02c-3.2.71-3.88-1.36-3.88-1.36 -.52-1.36-1.28-1.72-1.28-1.72-1.05-.74.08-.73.08-.73 1.16.08 1.77 1.22 1.77 1.22 1.03 1.82 2.7 1.3 3.36.99 .1-.77.4-1.3.72-1.6-2.55-.3-5.23-1.3-5.23-5.8 0-1.28.45-2.33 1.2-3.15-.12-.3-.52-1.5.12-3.12 0 0 .98-.32 3.2 1.2a11 11 0 0 1 5.83 0 c2.22-1.52 3.2-1.2 3.2-1.2.64 1.62.24 2.82.12 3.12 .75.82 1.2 1.87 1.2 3.15 0 4.52-2.69 5.5-5.26 5.8 .41.36.78 1.1.78 2.22v3.29c0 .31.22.68.8.57 A11.5 11.5 0 0 0 23.25 12C23.25 5.6 18.27.5 12 .5z"/>
+			</svg>
+			<span class="text-sm font-medium text-white/80 group-hover:text-white">
+				Star on GitHub
+			</span>
+		</a>
+	</div>
+
+	<script is:inline>
 		const canvas = document.getElementById("c");
 		const ctx = canvas.getContext("2d");
 		const scoreEl = document.getElementById("score");
+		const resetBtn = document.getElementById("resetBtn");
 
 		let drawing = false;
 		let locked = false;
@@ -128,39 +143,75 @@ import '../styles/global.css';
 
 		function getPos(e) {
 			const r = canvas.getBoundingClientRect();
-
 			return {
 				x: (e.clientX - r.left) * (canvas.width / r.width),
 				y: (e.clientY - r.top) * (canvas.height / r.height)
 			};
 		}
 
+		// Support touch events for mobile device testing
+		function getTouchPos(e) {
+			const t = e.touches[0];
+			const r = canvas.getBoundingClientRect();
+			return {
+				x: (t.clientX - r.left) * (canvas.width / r.width),
+				y: (t.clientY - r.top) * (canvas.height / r.height)
+			};
+		}
+
+		// Mouse event handlers
 		canvas.addEventListener("mousedown", (e) => {
 			if (locked) return;
-
 			drawing = true;
 			path = [];
-
-			const p = getPos(e);
-			path.push(p);
+			path.push(getPos(e));
 		});
 
 		window.addEventListener("mouseup", () => {
 			if (!drawing) return;
-
 			drawing = false;
 			locked = true;
+			updateScore(getScore());
 
-			const s = getScore();
-			updateScore(s);
+			//reveals the reset button responsivly
+			resetBtn.classList.remove("hidden");
+			setTimeout(() => {
+				resetBtn.classList.remove("opacity-0", "translate-y-4");}, 10);
 		});
 
 		canvas.addEventListener("mousemove", (e) => {
 			if (!drawing || locked) return;
+			handleMove(getPos(e));
+		});
 
-			const p = getPos(e);
+		// Touch device support mapping
+		canvas.addEventListener("touchstart", (e) => {
+			if (locked) return;
+			drawing = true;
+			path = [];
+			path.push(getTouchPos(e));
+		});
+
+		window.addEventListener("touchend", () => {
+			if (!drawing) return;
+			drawing = false;
+			locked = true;
+			updateScore(getScore());
+
+			//reveals the reset button responsivly here too
+			resetBtn.classList.remove("hidden");
+			setTimeout(() => {
+				resetBtn.classList.remove("opacity-0", "translate-y-4");}, 10);
+		});
+
+		canvas.addEventListener("touchmove", (e) => {
+			if (!drawing || locked) return;
+			e.preventDefault();
+			handleMove(getTouchPos(e));
+		});
+
+		function handleMove(p) {
 			path.push(p);
-
 			if (path.length > 1) {
 				const a = path[path.length - 2];
 				const b = path[path.length - 1];
@@ -173,9 +224,8 @@ import '../styles/global.css';
 				ctx.lineCap = "round";
 				ctx.stroke();
 			}
-
 			updateScore(getScore());
-		});
+		}
 
 		function dist(a, b) {
 			return Math.hypot(a.x - b.x, a.y - b.y);
@@ -183,35 +233,26 @@ import '../styles/global.css';
 
 		function resample(points, n = 120) {
 			if (points.length < 2) return points;
-
 			let dists = [0];
-
 			for (let i = 1; i < points.length; i++) {
 				dists[i] = dists[i - 1] + dist(points[i], points[i - 1]);
 			}
-
 			const total = dists[dists.length - 1];
 			const step = total / (n - 1);
-
 			let out = [];
 			let j = 0;
 
 			for (let i = 0; i < n; i++) {
 				const target = i * step;
-
 				while (j < dists.length - 1 && dists[j] < target) {
 					j++;
 				}
-
 				const i1 = Math.max(0, j - 1);
 				const i2 = j;
-
 				const p1 = points[i1];
 				const p2 = points[i2] || p1;
-
 				const d1 = dists[i1];
 				const d2 = dists[i2];
-
 				const t = (target - d1) / ((d2 - d1) || 1);
 
 				out.push({
@@ -219,19 +260,16 @@ import '../styles/global.css';
 					y: p1.y + (p2.y - p1.y) * t
 				});
 			}
-
 			return out;
 		}
 
 		function normalize(points) {
 			let cx = 0;
 			let cy = 0;
-
 			for (const p of points) {
 				cx += p.x;
 				cy += p.y;
 			}
-
 			cx /= points.length;
 			cy /= points.length;
 
@@ -241,11 +279,9 @@ import '../styles/global.css';
 			}));
 
 			let maxR = 0;
-
 			for (const p of shifted) {
 				maxR = Math.max(maxR, Math.hypot(p.x, p.y));
 			}
-
 			return shifted.map(p => ({
 				x: p.x / maxR,
 				y: p.y / maxR
@@ -254,28 +290,22 @@ import '../styles/global.css';
 
 		function makeStar(n = 120) {
 			const pts = [];
-
 			for (let i = 0; i < n; i++) {
 				const t = i / n;
 				const a = t * Math.PI * 2 - Math.PI / 2;
-
 				const r = Math.sin(a * 5) > 0 ? 1 : 0.45;
-
 				pts.push({
 					x: Math.cos(a) * r,
 					y: Math.sin(a) * r
 				});
 			}
-
 			return pts;
 		}
 
 		function getScore() {
 			if (path.length < 10) return 0;
-
 			const user = normalize(resample(path));
 			const star = makeStar();
-
 			let error = 0;
 
 			for (let i = 0; i < user.length; i++) {
@@ -284,83 +314,43 @@ import '../styles/global.css';
 					user[i].y - star[i].y
 				);
 			}
-
 			error /= user.length;
-
 			const score = 100 - error * 120;
 			return Math.max(0, Math.min(100, score));
 		}
 
 		function updateScore(score) {
 			scoreEl.textContent = `Accuracy: ${score.toFixed(1)}%`;
-
 			const hue = score * 1.2;
-
-			scoreEl.style.color =
-				`hsl(${hue},100%,70%)`;
-
-			scoreEl.style.textShadow =
-				`0 0 20px hsla(${hue},100%,70%,0.7)`;
+			scoreEl.style.color = `hsl(${hue},100%,70%)`;
+			scoreEl.style.textShadow = `0 0 20px hsla(${hue},100%,70%,0.7)`;
 		}
 
-		document.getElementById("resetBtn").addEventListener("click", () => {
+		// Reset functionality implementation
+		resetBtn.addEventListener("click", () => {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 			path = [];
 			drawing = false;
 			locked = false;
 
+			// Reset elements to initial empty states cleanly
 			scoreEl.textContent = "Accuracy: -";
 			scoreEl.style.color = "";
 			scoreEl.style.textShadow = "";
+
+			//responsivly hides the reset button again :D
+			resetBtn.classList.add("opacity-0", "translate-y-4");
+			setTimeout(() => {
+				resetBtn.classList.add("hidden");
+			}, 500); // waits 500ms for the animation to finish to not interrupt it 
 		});
 	</script>
 
 	<style>
 		@keyframes float {
-			0%,100% {
-				transform: translateY(0);
-			}
-			50% {
-				transform: translateY(-10px);
-			}
+			0%,100% { transform: translateY(0); }
+			50% { transform: translateY(-10px); }
 		}
 	</style>
-	<div
-	class="fixed bottom-4 right-4 z-50"
->
-	<a
-		href="https://github.com/alflionel/draw-a-perfect-star"
-		target="_blank"
-		rel="noopener noreferrer"
-		class="group flex items-center gap-2 px-4 py-2 rounded-xl
-			   bg-white/10 hover:bg-white/20
-			   border border-white/10 hover:border-white/20
-			   backdrop-blur-md transition-all duration-200"
-	>
-		<svg
-			width="18"
-			height="18"
-			viewBox="0 0 24 24"
-			fill="currentColor"
-			class="opacity-80 group-hover:opacity-100 transition"
-		>
-			<path d="M12 .5C5.73.5.75 5.6.75 12c0 5.1 3.29 9.45 7.86 11
-			 .58.1.8-.26.8-.57v-2.02c-3.2.71-3.88-1.36-3.88-1.36
-			 -.52-1.36-1.28-1.72-1.28-1.72-1.05-.74.08-.73.08-.73
-			 1.16.08 1.77 1.22 1.77 1.22 1.03 1.82 2.7 1.3 3.36.99
-			 .1-.77.4-1.3.72-1.6-2.55-.3-5.23-1.3-5.23-5.8
-			 0-1.28.45-2.33 1.2-3.15-.12-.3-.52-1.5.12-3.12
-			 0 0 .98-.32 3.2 1.2a11 11 0 0 1 5.83 0
-			 c2.22-1.52 3.2-1.2 3.2-1.2.64 1.62.24 2.82.12 3.12
-			 .75.82 1.2 1.87 1.2 3.15 0 4.52-2.69 5.5-5.26 5.8
-			 .41.36.78 1.1.78 2.22v3.29c0 .31.22.68.8.57
-			 A11.5 11.5 0 0 0 23.25 12C23.25 5.6 18.27.5 12 .5z"/>
-		</svg>
-
-		<span class="text-sm font-medium text-white/80 group-hover:text-white">
-			Star on GitHub
-		</span>
-	</a>
 </body>
 </html>
